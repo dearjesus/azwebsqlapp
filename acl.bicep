@@ -19,7 +19,7 @@ resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   scope: sqlServer
   properties: {
     roleDefinitionId: directoryReader.id
-    principalId: sqlIdentity.id
+    principalId: sqlIdentity.properties.principalId
     principalType: 'ServicePrincipal'
   }
 }
