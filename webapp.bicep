@@ -45,5 +45,4 @@ resource webSiteConnectionStrings 'Microsoft.Web/sites/config@2020-12-01' = {
   }
 }
 
-output webServerName string = hostingPlan.name
 output webSiteName string = website.name
