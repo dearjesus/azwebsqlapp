@@ -5,7 +5,6 @@ resource sqlServer 'Microsoft.Sql/servers@2023-08-01-preview' existing = {
 }
 
 resource sqlIdentity 'Microsoft.ManagedIdentity/identities@2023-01-31' existing = {
-  scope: tenant()
   name: sqlServerName
 }
 
