@@ -1,6 +1,6 @@
 on:
   workflow_dispatch:
-name: Deploy Entra Event Handler
+name: Deploy Azure Resources
 permissions:
   id-token: write
   contents: read
@@ -26,5 +26,7 @@ jobs:
       with:
         scope: 'subscription'
         region: 'UK South'
+        resourceGroupName: ${{ secrets.AZURE_RG }}
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        parameters: 'resourcePrefix=${{ secrets.RESOURCE_PREFIX }}'
         template: ./main.bicep

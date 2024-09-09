@@ -16,5 +16,5 @@ module eventHub 'eventhub.bicep' = {
     }
   }
 
-output eventHubNamespaceName string = eventHub.outputs.eventHubNamespaceName
-output eventHubName string = eventHub.outputs.eventHubName
+// output eventHubNamespaceName string = eventHub.outputs.eventHubNamespaceName
+// output eventHubName string = eventHub.outputs.eventHubName
