@@ -28,7 +28,7 @@ jobs:
         region: 'UK South'
         resourceGroupName: ${{ secrets.AZURE_RG }}
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        parameters: 'resourcePrefix=${{ secrets.RESOURCE_PREFIX }} resourceGroupName=${{ secrets.AZURE_RG }} sqlAdmins=${{ secrets.SQL_ADMINS}}'
+        parameters: 'resourceGroupName=${{ secrets.AZURE_RG }} sqlAdmins=${{ secrets.SQL_ADMINS}}'
         template: ./main.bicep
       
       # Create Web App to SQL Connection using SA-MI
