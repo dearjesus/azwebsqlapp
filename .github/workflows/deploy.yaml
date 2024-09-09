@@ -38,7 +38,7 @@ jobs:
       uses: azure/powershell@v2
       with:
         inlineScript: |
-          ./powershellscripts/entraacl.ps1 ${{ secrets.SQL_NAME }}
+          ./powershellscripts/fart.ps1 ${{ secrets.SQL_NAME }}
         azPSVersion: latest
 
       # Grant Web App to SQL access using SQL script
