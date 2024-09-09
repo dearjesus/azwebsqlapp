@@ -1,3 +1,5 @@
+metadata description = 'Creates a web app and SQL server, then assigns some rights to allow passwordless authentication for the web app'
+
 targetScope = 'subscription'
 param resourceGroupName string
 param sqlAdmins string
