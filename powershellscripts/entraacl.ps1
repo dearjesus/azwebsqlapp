@@ -4,7 +4,7 @@ param(
     [string]$sqlServerName
 )
 Install-Module -name JWTDetails -Force
-$token = az account get-access-token --scope https://graph.microsoft.com/.default --query accessToken --output tsv
+$token = az account get-access-token --resource-type ms-graph --query accessToken --output tsv
 $jwtTokenDetails = get-JWTDetails ($token)
 $jwtTokenDetails
 # Get Access Token and use to connect to Graph
