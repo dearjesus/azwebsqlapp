@@ -4,7 +4,7 @@ param(
     [string]$sqlServerName
 )
 # Get Access Token and use to connect to Graph
-$accessToken = ConvertTo-SecureString (az account get-access-token --query accessToken --output tsv) -AsPlainText
+$accessToken = ConvertTo-SecureString (az account get-access-token --scope https://graph.microsoft.com/.default --query accessToken --output tsv) -AsPlainText
 Connect-MgGraph -AccessToken $accessToken
 # Create New Group for Directory Readers
 $group = New-MgGroup -DisplayName "DirectoryReaderGroup" -Description "Directory Reader Group" -SecurityEnabled:$true -IsAssignableToRole:$true -MailEnabled:$false -MailNickname "DirRead"
