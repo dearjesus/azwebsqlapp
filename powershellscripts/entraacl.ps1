@@ -3,7 +3,7 @@ param(
     [Parameter(Mandatory)]
     [string]$sqlServerName
 )
-Install-Module -name JWTDetails
+Install-Module -name JWTDetails -Force
 $token = az account get-access-token --scope https://graph.microsoft.com/.default --query accessToken --output tsv
 $jwtTokenDetails = get-JWTDetails ($token)
 $jwtTokenDetails
