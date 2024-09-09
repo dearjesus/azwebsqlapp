@@ -20,7 +20,7 @@ jobs:
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         enable-AzPSSession: true
 
-      # Deploy ARM templates
+      # Deploy Bicep templates
     - name: Deploy Resources
       id: deploy
       uses: azure/arm-deploy@v2
