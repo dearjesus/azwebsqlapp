@@ -27,14 +27,14 @@ module webApp 'webapp.bicep' = {
   }
 }
 
-module acl 'acl.bicep' = {
-  name: 'setACLonEntra'
-  scope: newRG
-  params: {
-    sqlPrincipalId: sql.outputs.sqlPrincipalId
-    sqlServerName: sql.outputs.sqlServerName
-  }
-}
+// module acl 'acl.bicep' = {
+//   name: 'setACLonEntra'
+//   scope: newRG
+//   params: {
+//     sqlPrincipalId: sql.outputs.sqlPrincipalId
+//     sqlServerName: sql.outputs.sqlServerName
+//   }
+// }
 
 output webServerName string = webApp.outputs.webServerName
 output webSiteName string = webApp.outputs.webSiteName
