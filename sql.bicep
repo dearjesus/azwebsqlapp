@@ -23,7 +23,7 @@ resource sqlServer 'Microsoft.Sql/servers@2023-05-01-preview' = {
     // federatedClientId: 'string'
     isIPv6Enabled: 'Disabled'
     // keyId: 'string'
-    minimalTlsVersion: '1.3'
+    // minimalTlsVersion: '1.3'
     // primaryUserAssignedIdentityId: 'string'
     publicNetworkAccess: 'Enabled'
     // restrictOutboundNetworkAccess: 'string'
@@ -43,7 +43,7 @@ resource sqlDatabase 'Microsoft.Sql/servers/databases@2023-05-01-preview' = {
     // family: 'string'
     name: 'Basic'
     // size: 'string'
-    // tier: 'string'
+    tier: 'Basic'
   }
   parent: sqlServer
   // identity: {
@@ -64,7 +64,7 @@ resource sqlDatabase 'Microsoft.Sql/servers/databases@2023-05-01-preview' = {
     // federatedClientId: 'string'
     // freeLimitExhaustionBehavior: 'string'
     // highAvailabilityReplicaCount: int
-    // isLedgerOn: bool
+    isLedgerOn: false
     // keys: {
     //   {customized property}: {}
     // }
@@ -76,10 +76,10 @@ resource sqlDatabase 'Microsoft.Sql/servers/databases@2023-05-01-preview' = {
     // minCapacity: json('decimal-as-string')
     // performCutover: bool
     // preferredEnclaveType: 'string'
-    // readScale: 'string'
+    readScale: 'Disabled'
     // recoverableDatabaseId: 'string'
     // recoveryServicesRecoveryPointId: 'string'
-    // requestedBackupStorageRedundancy: 'string'
+    requestedBackupStorageRedundancy: 'Local'
     // restorableDroppedDatabaseId: 'string'
     // restorePointInTime: 'string'
     // sampleName: 'string'
@@ -88,7 +88,7 @@ resource sqlDatabase 'Microsoft.Sql/servers/databases@2023-05-01-preview' = {
     // sourceDatabaseId: 'string'
     // sourceResourceId: 'string'
     // useFreeLimit: bool
-    // zoneRedundant: bool
+    zoneRedundant: false
   }
 }
 
