@@ -11,7 +11,7 @@ $jwtTokenDetails
 $accessToken = ConvertTo-SecureString $token -AsPlainText
 Connect-MgGraph -AccessToken $accessToken
 # Create New Group for Directory Readers
-$group = New-MgGroup -DisplayName "DirectoryReaderGroup" -Description "Directory Reader Group" -SecurityEnabled:$true -IsAssignableToRole:$true -MailEnabled:$false -MailNickname "DirRead"
+$group = New-MgGroup -DisplayName "Directory Readers" -Description "Directory Reader Entra RBAC Group" -SecurityEnabled:$true -IsAssignableToRole:$true -MailEnabled:$false -MailNickname "DirRead"
 $group
 # Displays the Directory Readers role information
 $roleDefinition = Get-MgRoleManagementDirectoryRoleDefinition -Filter "DisplayName eq 'Directory Readers'"
