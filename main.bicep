@@ -1,5 +1,6 @@
 targetScope = 'subscription'
-param resourceGroupName string = 'EntraEventHub'
+param resourceGroupName string
+param sqlAdmins string
 param resourceGroupLocation string = 'uksouth'
 
 resource newRG 'Microsoft.Resources/resourceGroups@2024-03-01' = {
@@ -7,14 +8,23 @@ resource newRG 'Microsoft.Resources/resourceGroups@2024-03-01' = {
   location: resourceGroupLocation
 }
 
-module eventHub 'eventhub.bicep' = {
-    name: 'eventHubModule'
-    scope: newRG
-    params: {
-      eventHubNamespaceName: 'entraEventHub'
-      eventHubName: 'userEvents'
-    }
+module sql 'sql.bicep' = {
+  name: 'sqlServerModule'
+  scope: newRG
+  params: {
+    sqlAdmins: sqlAdmins
   }
+}
 
-// output eventHubNamespaceName string = eventHub.outputs.eventHubNamespaceName
-// output eventHubName string = eventHub.outputs.eventHubName
+module webApp 'webapp.bicep' = {
+  name: 'webAppModule'
+  scope: newRG
+  params: {
+    sqlServer: sql.outputs.sqlServerName
+    sqlDatabase: sql.outputs.sqlDatabaseName
+  }
+}
+
+output webServerName string = webApp.outputs.webServerName
+output sqlServerName string = sql.outputs.sqlServerName
+output sqlDatabaseName string = sql.outputs.sqlDatabaseName

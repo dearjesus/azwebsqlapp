@@ -28,5 +28,15 @@ jobs:
         region: 'UK South'
         resourceGroupName: ${{ secrets.AZURE_RG }}
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        parameters: 'resourcePrefix=${{ secrets.RESOURCE_PREFIX }}'
+        parameters: 'resourcePrefix=${{ secrets.RESOURCE_PREFIX }} resourceGroupName=${{ secrets.AZURE_RG }} sqlAdmins=${{ secrets.SQL_ADMINS}}'
         template: ./main.bicep
+      
+      # Create Web App to SQL Connection using SA-MI
+    - name: Create SQL Connection
+      id: sqlconnection
+      uses: azure/cli@v2
+      with:
+        azcliversion: latest
+        inlineScript: |
+          az extension add --name serviceconnector-passwordless --upgrade
+          az webapp connection create sql --resource-group ${{ secrets.AZURE_RG }} --name ${{ steps.deploy.outputs.webServerName }} --target-resource-group ${{ secrets.AZURE_RG }} --server ${{ steps.deploy.outputs.sqlServerName }} --database ${{ steps.deploy.outputs.sqlDatabaseName }} --system-identity --client-type python
