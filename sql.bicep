@@ -13,7 +13,7 @@ resource sqlServer 'Microsoft.Sql/servers@2023-05-01-preview' = {
     administrators: {
       administratorType: 'ActiveDirectory'
       azureADOnlyAuthentication: true
-      login: 'SQL Admins' // Has to match even if not changing else stupid thing errors out
+      login: 'SQL Admins' // Has to match even if not changing else stupid thing errors out, else child out the /administrators property to another resource
       principalType: 'Group'
       sid: sqlAdmins
     }
