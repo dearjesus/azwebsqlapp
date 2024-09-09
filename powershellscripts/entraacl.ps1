@@ -3,8 +3,6 @@ param(
     [Parameter(Mandatory)]
     [string]$sqlServerName
 )
-# Connect to Graph
-Connect-MgGraph
 # Create New Group for Directory Readers
 $group = New-MgGroup -DisplayName "DirectoryReaderGroup" -Description "Directory Reader Group" -SecurityEnabled:$true -IsAssignableToRole:$true -MailEnabled:$false -MailNickname "DirRead"
 $group
