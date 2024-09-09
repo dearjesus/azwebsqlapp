@@ -31,6 +31,7 @@ module acl 'acl.bicep' = {
   name: 'setACLonEntra'
   scope: newRG
   params: {
+    sqlPrincipalId: sql.outputs.sqlPrincipalId
     sqlServerName: sql.outputs.sqlServerName
   }
 }

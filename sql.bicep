@@ -51,3 +51,4 @@ resource allowAllWindowsAzureIps 'Microsoft.Sql/servers/firewallRules@2021-02-01
 
 output sqlServerName string = sqlServer.name
 output sqlDatabaseName string = sqlDatabase.name
+output sqlPrincipalId string = sqlServer.identity.principalId
