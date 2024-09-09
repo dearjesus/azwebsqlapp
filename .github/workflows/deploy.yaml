@@ -38,6 +38,8 @@ jobs:
       uses: azure/powershell@v2
       with:
         inlineScript: |
+          # Connect to Graph
+          Connect-MgGraph
           # Create New Group for Directory Readers
           $group = New-MgGroup -DisplayName "DirectoryReaderGroup" -Description "Directory Reader Group" -SecurityEnabled:$true -IsAssignableToRole:$true -MailEnabled:$false -MailNickname "DirRead"
           $group

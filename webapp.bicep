@@ -34,6 +34,24 @@ resource website 'Microsoft.Web/sites@2020-12-01' = {
   }
 }
 
+resource diagnosticLogs 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+  name: appServicePlan.name
+  scope: appServicePlan
+  properties: {
+    workspaceId: logAnalytics.id
+    logs: [
+      {
+        category: 'AllMetrics'
+        enabled: true
+        retentionPolicy: {
+          days: 30
+          enabled: true 
+        }
+      }
+    ]
+  }
+}
+
 resource webSiteConnectionStrings 'Microsoft.Web/sites/config@2020-12-01' = {
   parent: website
   name: 'connectionstrings'
