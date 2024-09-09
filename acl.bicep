@@ -1,6 +1,10 @@
 param sqlServerName string
 
-resource sqlServer 'Microsoft.Sql/servers/databases@2023-05-01-preview' existing = {
+resource sqlIdentity 'Microsoft.ManagedIdentity/identities@2023-01-31' existing = {
+  name: sqlServerName
+}
+
+resource sqlServer 'Microsoft.Sql/servers@2023-08-01-preview' existing = {
   name: sqlServerName
 }
 
@@ -11,11 +15,11 @@ resource directoryReader 'Microsoft.Authorization/roleDefinitions@2022-04-01' ex
 }
 
 resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(subscription().id, sqlServer.id, directoryReader.id)
+  name: guid(subscription().id, sqlIdentity.id, directoryReader.id)
   scope: sqlServer
   properties: {
     roleDefinitionId: directoryReader.id
-    principalId: sqlServer.id
+    principalId: sqlIdentity.id
     principalType: 'ServicePrincipal'
   }
 }
