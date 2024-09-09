@@ -38,5 +38,4 @@ jobs:
       with:
         azcliversion: latest
         inlineScript: |
-          az extension add --name serviceconnector-passwordless --upgrade
           az webapp connection create sql --resource-group ${{ secrets.AZURE_RG }} --name ${{ steps.deploy.outputs.webSiteName }} --target-resource-group ${{ secrets.AZURE_RG }} --server ${{ steps.deploy.outputs.sqlServerName }} --database ${{ steps.deploy.outputs.sqlDatabaseName }} --system-identity --client-type python
