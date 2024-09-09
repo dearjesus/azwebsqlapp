@@ -31,9 +31,8 @@ jobs:
     #     subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     #     parameters: 'resourceGroupName=${{ secrets.AZURE_RG }} sqlAdmins=${{ secrets.SQL_ADMINS }}'
     #     template: ./main.bicep
-      
+
       # Grant SQL Server Directory Readers Role
-      ####### !!!! THIS NEEDS A GROUP ALREADY EXISTING NAMED 'Directory Readers' WITH THAT ROLE BC MICROSOFT ARE A CHORE AND I CANT BE BOTHERED TO AUTOMATE THIS CRAPULENCE AFTER TRYING 5 DIFFERENT WAYS
     - name: Grant SQL Entra Role
       id: sqlentrarole
       uses: azure/powershell@v2
