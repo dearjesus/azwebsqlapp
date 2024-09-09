@@ -35,13 +35,13 @@ jobs:
       # Grant SQL Server Directory Readers Role
     - name: Grant SQL Entra Role
       id: sqlentrarole
-      uses: azure/powershell@master
+      uses: azure/powershell@v2
       with:
         inlineScript: ./powershellscripts/entraacl.ps1 ${{ steps.deploy.outputs.sqlServerName }}
         azPSVersion: "latest"
 
-      # Create Web App to SQL Connection using SA-MI
-    - name: Create SQL Connection
+      # Grant Web App to SQL access using SQL script
+    - name: Grant Web App SQL Access
       id: sqlconnection
       uses: azure/sql-action@v2.3
       with:        
