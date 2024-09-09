@@ -9,7 +9,7 @@ resource newRG 'Microsoft.Resources/resourceGroups@2024-03-01' = {
 }
 
 module sql 'sql.bicep' = {
-  name: 'sqlServerModule'
+  name: 'sqlServer'
   scope: newRG
   params: {
     sqlAdmins: sqlAdmins
@@ -17,11 +17,19 @@ module sql 'sql.bicep' = {
 }
 
 module webApp 'webapp.bicep' = {
-  name: 'webAppModule'
+  name: 'webApp'
   scope: newRG
   params: {
     sqlServer: sql.outputs.sqlServerName
     sqlDatabase: sql.outputs.sqlDatabaseName
+  }
+}
+
+module acl 'acl.bicep' = {
+  name: 'setACLonEntra'
+  scope: newRG
+  params: {
+    sqlServerName: sql.outputs.sqlServerName
   }
 }
 
