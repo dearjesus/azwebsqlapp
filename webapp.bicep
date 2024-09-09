@@ -34,19 +34,6 @@ resource website 'Microsoft.Web/sites@2020-12-01' = {
   }
 }
 
-resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
-  name: 'AppInsights${website.name}'
-  location: resourceGroup().location
-  tags: {
-    'hidden-link:${website.id}': 'Resource'
-    displayName: 'AppInsightsComponent'
-  }
-  kind: 'web'
-  properties: {
-    Application_Type: 'web'
-  }
-}
-
 resource webSiteConnectionStrings 'Microsoft.Web/sites/config@2020-12-01' = {
   parent: website
   name: 'connectionstrings'
