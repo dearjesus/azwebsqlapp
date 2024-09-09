@@ -21,46 +21,32 @@ jobs:
         enable-AzPSSession: true
 
       # Deploy Bicep templates
-    - name: Deploy Resources
-      id: deploy
-      uses: azure/arm-deploy@v2
-      with:
-        scope: 'subscription'
-        region: 'UK South'
-        resourceGroupName: ${{ secrets.AZURE_RG }}
-        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        parameters: 'resourceGroupName=${{ secrets.AZURE_RG }} sqlAdmins=${{ secrets.SQL_ADMINS }}'
-        template: ./main.bicep
+    # - name: Deploy Resources
+    #   id: deploy
+    #   uses: azure/arm-deploy@v2
+    #   with:
+    #     scope: 'subscription'
+    #     region: 'UK South'
+    #     resourceGroupName: ${{ secrets.AZURE_RG }}
+    #     subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    #     parameters: 'resourceGroupName=${{ secrets.AZURE_RG }} sqlAdmins=${{ secrets.SQL_ADMINS }}'
+    #     template: ./main.bicep
       
       # Grant SQL Server Directory Readers Role
+      ####### !!!! THIS NEEDS A GROUP ALREADY EXISTING NAMED 'Directory Readers' WITH THAT ROLE BC MICROSOFT ARE A CHORE AND I CANT BE BOTHERED TO AUTOMATE THIS CRAPULENCE AFTER TRYING 5 DIFFERENT WAYS
     - name: Grant SQL Entra Role
       id: sqlentrarole
       uses: azure/powershell@v2
       with:
         inlineScript: |
-          ./powershellscripts/entraacl.ps1 ${{ steps.deploy.outputs.sqlServerName }}
-          # # Create New Group for Directory Readers
-          # $group = New-MgGroup -DisplayName "DirectoryReaderGroup" -Description "Directory Reader Group" -SecurityEnabled:$true -IsAssignableToRole:$true -MailEnabled:$false -MailNickname "DirRead"
-          # $group
-          # # Displays the Directory Readers role information
-          # $roleDefinition = Get-MgRoleManagementDirectoryRoleDefinition -Filter "DisplayName eq 'Directory Readers'"
-          # $roleDefinition
-          # # Assigns the Directory Readers role to the group
-          # $roleAssignment = New-MgRoleManagementDirectoryRoleAssignment -DirectoryScopeId '/' -RoleDefinitionId $roleDefinition.Id -PrincipalId $group.Id
-          # $roleAssignment
-          # # Returns the service principal of your Azure SQL resource
-          # $managedIdentity = Get-MgServicePrincipal -Filter "displayName eq '${{ steps.deploy.outputs.sqlServerName }}'"
-          # $managedIdentity
-          # # Adds the service principal to the group
-          # New-MgGroupMember -GroupId $group.Id -DirectoryObjectId $managedIdentity.Id
-          # Get-MgGroupMember -GroupId $group.Id -Filter "Id eq '$($managedIdentity.Id)'"
-        azPSVersion: "latest"
+          ./powershellscripts/entraacl.ps1
+        azPSVersion: latest
 
       # Grant Web App to SQL access using SQL script
-    - name: Grant Web App SQL Access
-      id: sqlconnection
-      uses: azure/sql-action@v2.3
-      with:        
-        connection-string: 'Server=${{ steps.deploy.outputs.sqlServerName }}.database.windows.net;Initial Catalog=${{ steps.deploy.outputs.sqlDatabaseName }};Authentication=Active Directory Default; Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
-        arguments: '-v webSiteName="${{ steps.deploy.outputs.webSiteName }}"'
-        path: './sqlscripts/acl.sql'
+    # - name: Grant Web App SQL Access
+    #   id: sqlconnection
+    #   uses: azure/sql-action@v2.3
+    #   with:        
+    #     connection-string: 'Server=${{ steps.deploy.outputs.sqlServerName }}.database.windows.net;Initial Catalog=${{ steps.deploy.outputs.sqlDatabaseName }};Authentication=Active Directory Default; Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
+    #     arguments: '-v webSiteName="${{ steps.deploy.outputs.webSiteName }}"'
+    #     path: './sqlscripts/acl.sql'
