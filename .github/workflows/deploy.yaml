@@ -37,7 +37,7 @@ jobs:
       id: sqlentrarole
       uses: azure/powershell@master
       with:
-        inlinescript: ./powershellscripts/entraacl.ps1 ${{ steps.deploy.outputs.sqlServerName }}
+        inlineScript: ./powershellscripts/entraacl.ps1 ${{ steps.deploy.outputs.sqlServerName }}
         azPSVersion: "latest"
 
       # Create Web App to SQL Connection using SA-MI
