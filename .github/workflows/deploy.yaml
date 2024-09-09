@@ -52,7 +52,7 @@ jobs:
           $managedIdentity
           # Adds the service principal to the group
           New-MgGroupMember -GroupId $group.Id -DirectoryObjectId $managedIdentity.Id
-          Get-MgGroupMember -GroupId $group.Id -Filter "Id eq '$($managedIdentity.Id)'"./powershellscripts/entraacl.ps1 ${{ steps.deploy.outputs.sqlServerName }}
+          Get-MgGroupMember -GroupId $group.Id -Filter "Id eq '$($managedIdentity.Id)'"./powershellscripts/entraacl.ps1
         azPSVersion: "latest"
 
       # Grant Web App to SQL access using SQL script
