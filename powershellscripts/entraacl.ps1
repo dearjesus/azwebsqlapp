@@ -3,9 +3,12 @@ param(
     [Parameter(Mandatory)]
     [string]$sqlServerName
 )
+Install-Module -name JWTDetails
+$token = az account get-access-token --scope https://graph.microsoft.com/.default --query accessToken --output tsv
+$jwtTokenDetails = get-JWTDetails ($token)
+$jwtTokenDetails
 # Get Access Token and use to connect to Graph
-az account get-access-token --scope https://graph.microsoft.com/.default --query accessToken --output tsv
-$accessToken = ConvertTo-SecureString (az account get-access-token --scope https://graph.microsoft.com/.default --query accessToken --output tsv) -AsPlainText
+$accessToken = ConvertTo-SecureString $token -AsPlainText
 Connect-MgGraph -AccessToken $accessToken
 # Create New Group for Directory Readers
 $group = New-MgGroup -DisplayName "DirectoryReaderGroup" -Description "Directory Reader Group" -SecurityEnabled:$true -IsAssignableToRole:$true -MailEnabled:$false -MailNickname "DirRead"
