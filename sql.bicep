@@ -7,7 +7,7 @@ resource sqlServer 'Microsoft.Sql/servers@2023-05-01-preview' = {
   name: sqlServerName
   location: resourceGroup().location
   identity: {
-    type: 'None'
+    type: 'SystemAssigned'
   }
   properties: {
     administrators: {
@@ -29,9 +29,6 @@ resource sqlDatabase 'Microsoft.Sql/servers/databases@2023-05-01-preview' = {
     tier: 'Basic'
   }
   parent: sqlServer
-  identity: {
-    type: 'SystemAssigned'
-  }
   properties: {
     collation: 'SQL_Latin1_General_CP1_CI_AS'
     isLedgerOn: false
