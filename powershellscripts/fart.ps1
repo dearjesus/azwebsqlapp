@@ -12,13 +12,10 @@ param(
 Import-Module Microsoft.Graph.Authentication
 Import-Module Microsoft.Graph.Applications
 
-# Get Access Token and use to connect to Graph
+# Get new Access Token to use to connect to Graph
 $accessToken = ConvertTo-SecureString (az account get-access-token --resource-type ms-graph --query accessToken --output tsv) -AsPlainText
 
-# $tenantId = "<tenantId>"        # Your tenant ID
-# $MSIName = "<managedIdentity>"; # Name of your managed identity
-
-# Log in as a user with the "Global Administrator" or "Privileged Role Administrator" role
+# Log in as current user to Graph using new token
 Connect-MgGraph -AccessToken $accessToken
 
 # Search for Microsoft Graph
