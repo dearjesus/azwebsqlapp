@@ -29,7 +29,7 @@ jobs:
         region: 'UK South'
         resourceGroupName: ${{ secrets.AZURE_RG }}
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        parameters: 'resourceGroupName=${{ secrets.AZURE_RG }} sqlAdmins=${{ secrets.SQL_ADMINS }}'
+        parameters: 'resourceGroupName=${{ secrets.AZURE_RG }} sqlAdmins=${{ secrets.SQL_ADMINS }} repositoryUrl=${{ secrets.REPO_URL }}'
         template: ./main.bicep
 
       # Grant SQL Server Directory Readers Role

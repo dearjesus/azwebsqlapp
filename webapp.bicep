@@ -14,6 +14,9 @@ var websiteName = 'WebApp${uniqueString(resourceGroup().id)}'
 param sqlServer string
 param sqlDatabase string
 
+param repositoryUrl string
+param branch string = 'main'
+
 resource hostingPlan 'Microsoft.Web/serverfarms@2020-12-01' = {
   name: hostingPlanName
   location: resourceGroup().location
@@ -46,3 +49,13 @@ resource webSiteConnectionStrings 'Microsoft.Web/sites/config@2020-12-01' = {
 }
 
 output webSiteName string = website.name
+
+resource srcControls 'Microsoft.Web/sites/sourcecontrols@2021-01-01' = {
+  parent: website
+  name: 'web'
+  properties: {
+    repoUrl: repositoryUrl
+    branch: branch
+    isManualIntegration: true
+  }
+}
