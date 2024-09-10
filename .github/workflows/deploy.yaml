@@ -38,7 +38,7 @@ jobs:
       uses: azure/powershell@v2
       with:
         inlineScript: |
-          ./powershellscripts/entraroles.ps1 ::add-mask::${{ steps.deploy.outputs.sqlServerName }}
+          ./powershellscripts/entraroles.ps1 ${{ steps.deploy.outputs.sqlServerName }}
         azPSVersion: latest
 
       # Create Table and Data in SQL
