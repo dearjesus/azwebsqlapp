@@ -59,11 +59,19 @@ resource srcControls 'Microsoft.Web/sites/sourcecontrols@2021-01-01' = {
   }
 }
 
-param baseTime string = utcNow('u')
-
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' existing = {
   name: storageAccountName
 }
+
+param baseTime string = utcNow('u')
+var sasToken = storageAccount.listServiceSAS('2021-04-01', {
+  canonicalizedResource: '/blob/${storageAccount.name}/webapplogs'
+  signedResource: 'c'
+  signedProtocol: 'https'
+  signedPermission: 'rwl'
+  signedServices: 'b'
+  signedExpiry: dateTimeAdd(baseTime, 'P3D') // Create token to last 3 days
+}).serviceSasToken
 
 resource webLogs 'Microsoft.Web/sites/config@2022-09-01' = {
   name: 'logs'
@@ -73,14 +81,7 @@ resource webLogs 'Microsoft.Web/sites/config@2022-09-01' = {
       azureBlobStorage: {
         level: 'Verbose'
         retentionInDays: 2
-        sasUrl: storageAccount.listServiceSAS('2021-04-01', {
-          canonicalizedResource: '/blob/${storageAccountName}/webapplogs'
-          signedResource: 'c'
-          signedProtocol: 'https'
-          signedPermission: 'rwl'
-          signedServices: 'b'
-          signedExpiry: dateTimeAdd(baseTime, 'P3D') // Create token to last 3 days
-        }).serviceSasToken
+        sasUrl: 'https://${storageAccount.name}.blob.${environment().suffixes.storage}/${sasToken}'
       }
     }
     detailedErrorMessages: {
