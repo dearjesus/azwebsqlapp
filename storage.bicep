@@ -38,6 +38,9 @@ resource lifecycleManagementPolicy 'Microsoft.Storage/storageAccounts/management
                 }
               }
             }
+            filters: {
+              blobTypes: ['blockBlob']
+            }
           }
           enabled: true
           name: 'deleteBlobsAfter3Days'
