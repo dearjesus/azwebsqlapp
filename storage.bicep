@@ -50,3 +50,5 @@ resource lifecycleManagementPolicy 'Microsoft.Storage/storageAccounts/management
     }
   }
 }
+
+output storageAccountName string = storageAccount.name

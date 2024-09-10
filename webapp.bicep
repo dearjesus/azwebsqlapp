@@ -10,10 +10,10 @@ param skuName string = 'F1'
 param skuCapacity int = 1
 var hostingPlanName = 'ASP${uniqueString(resourceGroup().id)}'
 var websiteName = 'WebApp${uniqueString(resourceGroup().id)}'
-var storageAccountName = 'sto${uniqueString(resourceGroup().id)}'
 
 param sqlServer string
 param sqlDatabase string
+param storageAccountName string
 
 param repositoryUrl string
 param branch string = 'main'
@@ -74,7 +74,7 @@ resource webLogs 'Microsoft.Web/sites/config@2022-09-01' = {
         level: 'Verbose'
         retentionInDays: 2
         sasUrl: listServiceSAS(storageAccount.name,'2021-04-01', {
-          canonicalizedResource: '/blob/${storageAccount.name}/webapplogs'
+          canonicalizedResource: '/blob/${storageAccountName}/webapplogs'
           signedResource: 'c'
           signedProtocol: 'https'
           signedPermission: 'rwl'

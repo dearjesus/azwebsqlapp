@@ -4,6 +4,7 @@ targetScope = 'subscription'
 param resourceGroupName string
 param sqlAdmins string
 param repositoryUrl string
+param storageAccountName string
 param resourceGroupLocation string = 'uksouth'
 
 resource newRG 'Microsoft.Resources/resourceGroups@2024-03-01' = {
@@ -31,6 +32,7 @@ module webApp 'webapp.bicep' = {
     sqlServer: sql.outputs.sqlServerName
     sqlDatabase: sql.outputs.sqlDatabaseName
     repositoryUrl: repositoryUrl
+    storageAccountName: storageAccountName
   }
 }
 
