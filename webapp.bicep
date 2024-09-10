@@ -73,7 +73,7 @@ resource webLogs 'Microsoft.Web/sites/config@2022-09-01' = {
       azureBlobStorage: {
         level: 'Verbose'
         retentionInDays: 2
-        sasUrl: listServiceSAS(storageAccount.name,'2021-04-01', {
+        sasUrl: storageAccount.listServiceSAS('2021-04-01', {
           canonicalizedResource: '/blob/${storageAccountName}/webapplogs'
           signedResource: 'c'
           signedProtocol: 'https'
