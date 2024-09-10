@@ -61,6 +61,10 @@ resource srcControls 'Microsoft.Web/sites/sourcecontrols@2021-01-01' = {
 
 param baseTime string = utcNow('u')
 
+resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' existing = {
+  name: storageAccountName
+}
+
 resource webLogs 'Microsoft.Web/sites/config@2022-09-01' = {
   name: 'logs'
   parent: website
@@ -69,8 +73,8 @@ resource webLogs 'Microsoft.Web/sites/config@2022-09-01' = {
       azureBlobStorage: {
         level: 'Verbose'
         retentionInDays: 2
-        sasUrl: listServiceSAS(storageAccountName,'2021-04-01', {
-          canonicalizedResource: '/blob/${storageAccountName}/webapplogs'
+        sasUrl: listServiceSAS(storageAccount.name,'2021-04-01', {
+          canonicalizedResource: '/blob/${storageAccount.name}/webapplogs'
           signedResource: 'c'
           signedProtocol: 'https'
           signedPermission: 'rwl'
