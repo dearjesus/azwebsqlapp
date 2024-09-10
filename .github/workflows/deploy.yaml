@@ -21,16 +21,16 @@ jobs:
         enable-AzPSSession: true
 
       # Deploy Bicep templates
-    # - name: Deploy Resources
-    #   id: deploy
-    #   uses: azure/arm-deploy@v2
-    #   with:
-    #     scope: 'subscription'
-    #     region: 'UK South'
-    #     resourceGroupName: ${{ secrets.AZURE_RG }}
-    #     subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-    #     parameters: 'resourceGroupName=${{ secrets.AZURE_RG }} sqlAdmins=${{ secrets.SQL_ADMINS }}'
-    #     template: ./main.bicep
+    - name: Deploy Resources
+      id: deploy
+      uses: azure/arm-deploy@v2
+      with:
+        scope: 'subscription'
+        region: 'UK South'
+        resourceGroupName: ${{ secrets.AZURE_RG }}
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        parameters: 'resourceGroupName=${{ secrets.AZURE_RG }} sqlAdmins=${{ secrets.SQL_ADMINS }}'
+        template: ./main.bicep
 
       # Grant SQL Server Directory Readers Role
     - name: Grant SQL Entra Role
