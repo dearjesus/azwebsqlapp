@@ -46,7 +46,7 @@ jobs:
       uses: azure/sql-action@v2.3
       with:        
         connection-string: 'Server=${{ steps.deploy.outputs.sqlServerName }}.database.windows.net;Initial Catalog=${{ steps.deploy.outputs.sqlDatabaseName }};Authentication=Active Directory Default; Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
-        arguments: '-v user1upn="::add-mask::${{ secrets.USER1UPN }}" user1upn="::add-mask::${{ secrets.USER2UPN }}"'
+        arguments: '-v user1upn="${{ secrets.USER1UPN }}" user1upn="${{ secrets.USER2UPN }}"'
         path: './sqlscripts/sampledb.sql'
 
       # Grant Web App to SQL access using SQL script
@@ -54,5 +54,5 @@ jobs:
       uses: azure/sql-action@v2.3
       with:        
         connection-string: 'Server=${{ steps.deploy.outputs.sqlServerName }}.database.windows.net;Initial Catalog=${{ steps.deploy.outputs.sqlDatabaseName }};Authentication=Active Directory Default; Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
-        arguments: '-v webSiteName="::add-mask::${{ steps.deploy.outputs.webSiteName }}"'
+        arguments: '-v webSiteName="${{ steps.deploy.outputs.webSiteName }}"'
         path: './sqlscripts/acl.sql'
