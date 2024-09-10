@@ -1,8 +1,9 @@
 import os
 import pyodbc, struct
 from azure import identity
+from requests import request
 
-from typing import Union
+# from typing import Union
 from fastapi import FastAPI
 from pydantic import BaseModel
 
@@ -16,53 +17,15 @@ connection_string = os.environ["AZURE_SQL_CONNECTIONSTRING"]
 
 app = FastAPI()
 
-### MUST VISIT ROOT URL FIRST TO CREATE DATABASE, THANKS MICROSOFT ###
 @app.get("/")
 def root():
     print("Root of Sales API")
-    # try:
-    #     conn = get_conn()
-    #     cursor = conn.cursor()
-
-    #     # Table should be created ahead of time in production app.
-    #     cursor.execute("""
-    #         CREATE TABLE Sales (
-    #             OrderId int,
-    #             AppUserId int,
-    #             Product varchar(10),
-    #             Qty int
-    #         );
-    #     """)
-
-    #     conn.commit()
-    # except Exception as e:
-    #     # Table may already exist
-    #     print(e)
-    # try:
-    #     conn = get_conn()
-    #     cursor = conn.cursor()
-
-    #     # Table should be created ahead of time in production app.
-    #     cursor.execute("""
-    #         INSERT Sales VALUES
-    #             (1, 1, 'Valve', 5),
-    #             (2, 1, 'Wheel', 2),
-    #             (3, 1, 'Valve', 4),
-    #             (4, 2, 'Bracket', 2),
-    #             (5, 2, 'Wheel', 5),
-    #             (6, 2, 'Seat', 5);
-    #     """)
-
-    #     conn.commit()
-    # except Exception as e:
-    #     # Rows may already exist
-    #     print(e)
-    
     return "Sales API"
 
 @app.get("/all")
 def sales():
     rows = []
+    upn = request.headers.get('X-MS-CLIENT-PRINCIPAL-NAME')
     with get_conn() as conn:
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM Persons")

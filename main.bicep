@@ -29,15 +29,6 @@ module webApp 'webapp.bicep' = {
   }
 }
 
-// module acl 'acl.bicep' = {
-//   name: 'setACLonEntra'
-//   scope: newRG
-//   params: {
-//     sqlPrincipalId: sql.outputs.sqlPrincipalId
-//     sqlServerName: sql.outputs.sqlServerName
-//   }
-// }
-
 output webSiteName string = webApp.outputs.webSiteName
 output sqlServerName string = sql.outputs.sqlServerName
 output sqlDatabaseName string = sql.outputs.sqlDatabaseName
