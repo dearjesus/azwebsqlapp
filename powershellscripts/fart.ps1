@@ -19,7 +19,7 @@ $accessToken = ConvertTo-SecureString (az account get-access-token --resource-ty
 # $MSIName = "<managedIdentity>"; # Name of your managed identity
 
 # Log in as a user with the "Global Administrator" or "Privileged Role Administrator" role
-Connect-MgGraph -AccessToken -Scopes "AppRoleAssignment.ReadWrite.All,Application.Read.All"
+Connect-MgGraph -AccessToken $accessToken -Scopes "AppRoleAssignment.ReadWrite.All,Application.Read.All"
 
 # Search for Microsoft Graph
 $MSGraphSP = Get-MgServicePrincipal -Filter "DisplayName eq 'Microsoft Graph'";
