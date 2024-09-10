@@ -19,6 +19,11 @@ module sql 'sql.bicep' = {
   }
 }
 
+module storage 'storage.bicep' = {
+  name: 'storageAccount'
+  scope: newRG
+}
+
 module webApp 'webapp.bicep' = {
   name: 'webApp'
   scope: newRG

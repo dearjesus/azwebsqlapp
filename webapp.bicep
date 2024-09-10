@@ -10,6 +10,7 @@ param skuName string = 'F1'
 param skuCapacity int = 1
 var hostingPlanName = 'ASP${uniqueString(resourceGroup().id)}'
 var websiteName = 'WebApp${uniqueString(resourceGroup().id)}'
+var storageAccountName = 'sto${uniqueString(resourceGroup().id)}'
 
 param sqlServer string
 param sqlDatabase string
@@ -48,8 +49,6 @@ resource webSiteConnectionStrings 'Microsoft.Web/sites/config@2020-12-01' = {
   }
 }
 
-output webSiteName string = website.name
-
 resource srcControls 'Microsoft.Web/sites/sourcecontrols@2021-01-01' = {
   parent: website
   name: 'web'
@@ -59,3 +58,31 @@ resource srcControls 'Microsoft.Web/sites/sourcecontrols@2021-01-01' = {
     isManualIntegration: true
   }
 }
+
+param baseTime string = utcNow('u')
+
+resource webLogs 'Microsoft.Web/sites/config@2022-09-01' = {
+  name: 'logs'
+  parent: website
+  properties: {
+    applicationLogs: {
+      azureBlobStorage: {
+        level: 'Verbose'
+        retentionInDays: 2
+        sasUrl: listServiceSAS(storageAccountName,'2021-04-01', {
+          canonicalizedResource: '/blob/${storageAccountName}/webapplogs'
+          signedResource: 'c'
+          signedProtocol: 'https'
+          signedPermission: 'rwl'
+          signedServices: 'b'
+          signedExpiry: dateTimeAdd(baseTime, 'P3D') // Create token to last 3 days
+        }).serviceSasToken
+      }
+    }
+    detailedErrorMessages: {
+      enabled: true
+    }
+  }
+}
+
+output webSiteName string = website.name
