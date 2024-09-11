@@ -1,14 +1,14 @@
-fastapi
-uvicorn
-gunicorn
-jinja2
-python-multipart
+# For basicfastapi.py
+# fastapi
+# uvicorn
+# gunicorn
+# jinja2
+# python-multipart
 
 
 # For SQLFastApi.py
-# pyodbc
-# fastapi
-# uvicorn[standard]
-# pydantic
-# azure-identity
-# requests
+pyodbc
+fastapi
+uvicorn[standard]
+pydantic
+azure-identity
