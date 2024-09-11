@@ -17,23 +17,23 @@ app = FastAPI()
 @app.get("/")
 def root():
     print("Root of Person API")
-    try:
-        conn = get_conn()
-        cursor = conn.cursor()
+    # try:
+    #     conn = get_conn()
+    #     cursor = conn.cursor()
 
-        # Table should be created ahead of time in production app.
-        cursor.execute("""
-            CREATE TABLE Persons (
-                ID int NOT NULL PRIMARY KEY IDENTITY,
-                FirstName varchar(255),
-                LastName varchar(255)
-            );
-        """)
+    #     # Table should be created ahead of time in production app.
+    #     cursor.execute("""
+    #         CREATE TABLE Persons (
+    #             ID int NOT NULL PRIMARY KEY IDENTITY,
+    #             FirstName varchar(255),
+    #             LastName varchar(255)
+    #         );
+    #     """)
 
-        conn.commit()
-    except Exception as e:
-        # Table may already exist
-        print(e)
+    #     conn.commit()
+    # except Exception as e:
+    #     # Table may already exist
+    #     print(e)
     return "Person API"
 
 @app.get("/all")
