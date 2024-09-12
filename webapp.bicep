@@ -15,9 +15,6 @@ param sqlServer string
 param sqlDatabase string
 param storageAccountName string
 
-param repositoryUrl string
-param branch string = 'main'
-
 resource hostingPlan 'Microsoft.Web/serverfarms@2020-12-01' = {
   name: hostingPlanName
   location: resourceGroup().location
@@ -51,16 +48,6 @@ resource webSiteConnectionStrings 'Microsoft.Web/sites/config@2020-12-01' = {
       value: 'Data Source=tcp:${sqlServer}.database.windows.net,1433;Initial Catalog=${sqlDatabase};Authentication=Active Directory Default;TrustServerCertificate=True;'
       type: 'SQLAzure'
     }
-  }
-}
-
-resource srcControls 'Microsoft.Web/sites/sourcecontrols@2021-01-01' = {
-  parent: website
-  name: 'web'
-  properties: {
-    repoUrl: repositoryUrl
-    branch: branch
-    isManualIntegration: true
   }
 }
 

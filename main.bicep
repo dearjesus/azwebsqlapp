@@ -30,8 +30,16 @@ module webApp 'webapp.bicep' = {
   params: {
     sqlServer: sql.outputs.sqlServerName
     sqlDatabase: sql.outputs.sqlDatabaseName
-    repositoryUrl: repositoryUrl
     storageAccountName: storage.outputs.storageAccountName
+  }
+}
+
+module sourceControl 'srccontrol.bicep' = {
+  name: 'sourceControl'
+  scope: newRG
+  params: {
+    repositoryUrl: repositoryUrl
+    websiteName: webApp.outputs.webSiteName
   }
 }
 
