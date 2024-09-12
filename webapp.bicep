@@ -25,6 +25,7 @@ resource hostingPlan 'Microsoft.Web/serverfarms@2020-12-01' = {
     name: skuName
     capacity: skuCapacity
   }
+  kind: 'linux'
 }
 
 resource website 'Microsoft.Web/sites@2020-12-01' = {
@@ -35,6 +36,10 @@ resource website 'Microsoft.Web/sites@2020-12-01' = {
   }
   properties: {
     serverFarmId: hostingPlan.id
+    siteConfig: {
+      linuxFxVersion: 'python|3.11'
+      pythonVersion: '3.11'
+    }
   }
 }
 
