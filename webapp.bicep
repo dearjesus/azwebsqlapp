@@ -40,12 +40,6 @@ resource website 'Microsoft.Web/sites@2020-12-01' = {
       linuxFxVersion: 'python|3.11'
       pythonVersion: '3.11'
       appCommandLine: 'gunicorn -w 2 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000 main:app'
-      appSettings: [
-        {
-          name: 'AZURE_SQL_CONNECTIONSTRING'
-          value: 'Driver={ODBC Driver 18 for SQL Server};${sqlServer}.database.windows.net,1433;Initial Catalog=${sqlDatabase};;Encrypt=yes;TrustServerCertificate=yes;Connection Timeout=30'
-        }
-      ]
     }
   }
 }
@@ -57,6 +51,10 @@ resource webSiteConnectionStrings 'Microsoft.Web/sites/config@2020-12-01' = {
     DefaultConnection: {
       value: 'Data Source=tcp:${sqlServer}.database.windows.net,1433;Initial Catalog=${sqlDatabase};Authentication=Active Directory Default;TrustServerCertificate=True;'
       type: 'SQLAzure'
+    }
+    AZURE_SQL_CONNECTIONSTRING:{
+      type: 'Custom'
+      value: 'Driver={ODBC Driver 18 for SQL Server};${sqlServer}.database.windows.net,1433;Initial Catalog=${sqlDatabase};;Encrypt=yes;TrustServerCertificate=yes;Connection Timeout=30'
     }
   }
 }
