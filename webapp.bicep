@@ -18,11 +18,14 @@ param storageAccountName string
 resource hostingPlan 'Microsoft.Web/serverfarms@2020-12-01' = {
   name: hostingPlanName
   location: resourceGroup().location
+  kind: 'linux'
+  properties: {
+    reserved: true
+  }
   sku: {
     name: skuName
     capacity: skuCapacity
   }
-  kind: 'linux'
 }
 
 resource website 'Microsoft.Web/sites@2020-12-01' = {
