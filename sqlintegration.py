@@ -50,7 +50,7 @@ def create_engine_with_token():
 engine = create_engine_with_token()
 
 # SQLAlchemy engine and session setup (example connection string)
-# SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Define the SQLAlchemy Base model
 Base = declarative_base()
